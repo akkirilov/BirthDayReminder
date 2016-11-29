@@ -56,23 +56,48 @@ namespace BirthDayReminderApp
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Nasko!");
-            Console.WriteLine();
             string path = System.IO.Directory.GetCurrentDirectory() + "\\file.txt";
             List<string> persons = System.IO.File.ReadAllLines(path).ToList();
             string line = "======================================================================";
             {
+                string todayDay = DateTime.Today.DayOfWeek.ToString();
+                string empty = new string(' ', (16 - todayDay.Length) / 2);
                 Console.WriteLine(line);
-                Console.WriteLine("||                | Days before your BirthDay:  {0} |                ||", Days("23/12/1987"));
-                Console.WriteLine("||   " + DateTime.Today.ToString("dd-MM-yyyy") + "   | Days before best Christmas: {0} |     "
-                    + DateTime.Now.ToString("HH:mm") + "      ||", Days("25/12/0001"));
-                Console.WriteLine("||                | Days before happy NewYear:  {0} |                ||", Days("31/12/0001"));
+                if (DateTime.Today.Date == DateTime.Parse(BirthDay("23/12/1987")))
+                {
+                    Console.WriteLine("||                |                                |                ||");
+                    Console.WriteLine("||   " + DateTime.Today.ToString("dd-MM-yyyy") + "   |      Happy Birthdey Nasko!     |"
+                        + empty + todayDay + (todayDay.Length % 2 == 1 ? empty + " " : empty) + "||");
+                    Console.WriteLine("||                |                                |                ||");
+                }
+                else if (DateTime.Today.Date == DateTime.Parse(BirthDay("25/12/0001")))
+                {
+                    Console.WriteLine("||                |                                |                ||");
+                    Console.WriteLine("||   " + DateTime.Today.ToString("dd-MM-yyyy") + "   |        Happy Christmas!        |"
+                        + empty + todayDay + (todayDay.Length % 2 == 1 ? empty + " " : empty) + "||");
+                    Console.WriteLine("||                |                                |                ||");
+                }
+                else if (DateTime.Today.Date == DateTime.Parse(BirthDay("31/12/0001")))
+                {
+                    Console.WriteLine("||                |                                |                ||");
+                    Console.WriteLine("||   " + DateTime.Today.ToString("dd-MM-yyyy") + "   |        Happy New Year!         |"
+                        + empty + todayDay + (todayDay.Length % 2 == 1 ? empty + " " : empty) + "||");
+                    Console.WriteLine("||                |                                |                ||");
+                }
+                else
+                {
+                    Console.WriteLine("||                | Days before your BirthDay:  {0} |                ||", Days("23/12/1987"));
+                    Console.WriteLine("||   " + DateTime.Today.ToString("dd-MM-yyyy") + "   | Days before best Christmas: {0} |"
+                        + empty + todayDay + (todayDay.Length % 2 == 1 ? empty + " " : empty) + "||", Days("25/12/0001"));
+                    Console.WriteLine("||                | Days before happy NewYear:  {0} |                ||", Days("31/12/0001"));
+                }
                 Console.WriteLine(line);
                 Console.WriteLine("||===========    R    E    M    I    N    D    E    R    ===========||");
                 List<DateTime> orderByDate = new List<DateTime>();
                 for (int i = 0; i < persons.Count; i++)
                 {
                     string[] t = persons[i].Split('*');
-                    if (int.Parse(Days(t[0])) < 25)
+                    if (int.Parse(Days(t[0])) < 25 || DateTime.Parse(BirthDay(t[0])) == DateTime.Today)
                     {
                         orderByDate.Insert(0, DateTime.Parse(BirthDay(t[0])));
                     }
@@ -83,9 +108,9 @@ namespace BirthDayReminderApp
                     for (int j = 0; j < persons.Count; j++)
                     {
                         string[] t = persons[j].Split('*');
-                        if (orderByDate[i].Date == DateTime.Parse(BirthDay(t[0])).Date)
+                        if (orderByDate[i].Date == DateTime.Parse(BirthDay(t[0])).Date && orderByDate[i] != DateTime.Parse(BirthDay("23-12-1987")))
                         {
-                            string lineReminder = "|| " + Days(t[0]) + " days before " + t[1] + "'s Birthday - " + BirthDay(t[0]);
+                            string lineReminder = "|| " + (int.Parse(Days(t[0])) < 25 ? Days(t[0]) + " days before " : "Today is ") + t[1]  + "'s Birthday - " + BirthDay(t[0]);
                             Console.WriteLine("||" + new string(' ', (line.Length - 4)) + "||");
                             Console.WriteLine(lineReminder + new string(' ', (line.Length - lineReminder.Length - 2)) + "||");
                         }
