@@ -12,15 +12,16 @@ namespace BirthDayReminderApp
         {
             Console.Write("Enter name: ");
             string personName = Console.ReadLine();
-            DateTime personBirth;
-            try
+            DateTime personBirth = DateTime.MinValue;
+
+            Console.Write("Enter birth date: ");
+            DateTime.TryParse(Console.ReadLine(), out personBirth);
+            while (personBirth == DateTime.MinValue)
             {
-                Console.Write("Enter birth date: ");
+                Console.WriteLine();
+                Console.WriteLine("Invalid date!");
+                Console.Write("Enter birth date again: ");
                 DateTime.TryParse(Console.ReadLine(), out personBirth);
-            }
-            catch (Exception)
-            {
-                throw;
             }
             string person = personBirth.ToString("dd-MM-yyyy") + "*" + personName;
             return person; 
