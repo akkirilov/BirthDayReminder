@@ -170,6 +170,129 @@ namespace BirthDayReminderApp
                     }
                 }
 
+                else if (command == "d")
+                {
+                    Console.Write("Enter name: ");
+                    string tempO = Console.ReadLine();
+                    bool sucesfull = false;
+                    for (int i = 0; i < persons.Count; i++)
+                    {
+                        string[] t = persons[i].Split('*');
+                        if (t[1] == tempO)
+                        {
+                            persons.RemoveAt(i);
+                            System.IO.File.WriteAllLines(path, persons);
+                            Console.WriteLine("Sucesfully remove person!");
+                            Console.WriteLine();
+                            sucesfull = true;
+                            break;
+                        }
+                        else if (sucesfull == false && i == persons.Count - 1)
+                        {
+                            Console.WriteLine("There are no person with this name!");
+                            Console.WriteLine();
+                        }
+                    }
+                }
+
+                else if (command == "c")
+                {
+                    Console.Write("Enter old name: ");
+                    string tempO = Console.ReadLine();
+                    Console.Write("Enter new name: ");
+                    string tempN = Console.ReadLine();
+                    bool sucesfull = false;
+                    for (int i = 0; i < persons.Count; i++)
+                    {
+                        string[] t = persons[i].Split('*');
+                        if (t[1] == tempO)
+                        {
+                            persons.RemoveAt(i);
+                            persons.Insert(i, t[0] + "*" + tempN);
+                            System.IO.File.WriteAllLines(path, persons);
+                            Console.WriteLine("The change is sucesfull!");
+                            Console.WriteLine();
+                            sucesfull = true;
+                            break;
+                        }
+                        if (sucesfull == false && i == persons.Count - 1)
+                        {
+                            Console.WriteLine("There are no person with this name!");
+                            Console.WriteLine();
+                        }
+                    }
+                }
+
+                else if (command == "b")
+                {
+                    Console.Write("Enter name: ");
+                    string nameForChange = Console.ReadLine();
+                    Console.Write("Enter new date: ");
+                    DateTime newDate;
+                    if (DateTime.TryParse(Console.ReadLine(), out newDate))
+                    {
+                        bool sucesfull = false;
+                        for (int i = 0; i < persons.Count; i++)
+                        {
+                            string[] t = persons[i].Split('*');
+                            if (t[1] == nameForChange)
+                            {
+                                if (DateTime.Parse(t[0]) == newDate)
+                                {
+                                    Console.WriteLine("Entered date is the same!");
+                                    Console.WriteLine();
+                                    break;
+                                }
+                                else
+                                {
+                                    persons.RemoveAt(i);
+                                    persons.Insert(i, newDate.ToString("dd-MM-yyyy") + "*" + t[1]);
+                                    System.IO.File.WriteAllLines(path, persons);
+                                    Console.WriteLine("The change is sucesfull!");
+                                    Console.WriteLine();
+                                    sucesfull = true;
+                                    break;
+                                }
+                            }
+                            else if (sucesfull == false && i == persons.Count - 1)
+                            {
+                                Console.WriteLine("There are no person with this name!");
+                                Console.WriteLine();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid date of birth!");
+                    }
+                }
+
+                else if (command == "f")
+                {
+                    Console.Write("Enter name:    ");
+                    string tempO = Console.ReadLine();
+                    bool sucesfull = false;
+                    for (int i = 0; i < persons.Count; i++)
+                    {
+                        string[] t = persons[i].Split('*');
+                        if (t[1] == tempO)
+                        {
+                            Console.WriteLine("BirthDay:      {0}", BirthDay(t[0]));
+                            Console.WriteLine("Days left:     {0}", Days(t[0]));
+                            Console.WriteLine("Age:           {0}", Age(t[0]));
+                            Console.WriteLine("Date of bitrh: {0}", DateTime.Parse(t[0]).ToString("dd-MM-yyyy"));
+                            Console.WriteLine();
+                            sucesfull = true;
+                            break;
+                        }
+                        else if (sucesfull == false && i == persons.Count - 1)
+                        {
+                            Console.WriteLine("There are no person with this name!");
+                            Console.WriteLine();
+                        }
+                    }
+                }
+
                 else if (command == "l")
                 {
                     List<DateTime> orderByDate = new List<DateTime>();
@@ -313,129 +436,6 @@ namespace BirthDayReminderApp
                         Console.WriteLine("There are no person born at this year in your list!");
                     }
                     Console.WriteLine();
-                }
-
-                else if (command == "c")
-                {
-                    Console.Write("Enter old name: ");
-                    string tempO = Console.ReadLine();
-                    Console.Write("Enter new name: ");
-                    string tempN = Console.ReadLine();
-                    bool sucesfull = false;
-                    for (int i = 0; i < persons.Count; i++)
-                    {
-                        string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
-                        {
-                            persons.RemoveAt(i);
-                            persons.Insert(i, t[0] + "*" + tempN);
-                            System.IO.File.WriteAllLines(path, persons);
-                            Console.WriteLine("The change is sucesfull!");
-                            Console.WriteLine();
-                            sucesfull = true;
-                            break;
-                        }
-                        if (sucesfull == false && i == persons.Count - 1)
-                        {
-                            Console.WriteLine("There are no person with this name!");
-                            Console.WriteLine();
-                        }
-                    }
-                }
-
-                else if (command == "b")
-                {
-                    Console.Write("Enter name: ");
-                    string nameForChange = Console.ReadLine();
-                    Console.Write("Enter new date: ");
-                    DateTime newDate;
-                    if (DateTime.TryParse(Console.ReadLine(), out newDate))
-                    {
-                        bool sucesfull = false;
-                        for (int i = 0; i < persons.Count; i++)
-                        {
-                            string[] t = persons[i].Split('*');
-                            if (t[1] == nameForChange)
-                            {
-                                if (DateTime.Parse(t[0]) == newDate)
-                                {
-                                    Console.WriteLine("Entered date is the same!");
-                                    Console.WriteLine();
-                                    break;
-                                }
-                                else
-                                {
-                                    persons.RemoveAt(i);
-                                    persons.Insert(i, newDate.ToString("dd-MM-yyyy") + "*" + t[1]);
-                                    System.IO.File.WriteAllLines(path, persons);
-                                    Console.WriteLine("The change is sucesfull!");
-                                    Console.WriteLine();
-                                    sucesfull = true;
-                                    break;
-                                }
-                            }
-                            else if (sucesfull == false && i == persons.Count - 1)
-                            {
-                                Console.WriteLine("There are no person with this name!");
-                                Console.WriteLine();
-                            }
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid date of birth!");
-                    }
-                }
-
-                else if (command == "d")
-                {
-                    Console.Write("Enter name: ");
-                    string tempO = Console.ReadLine();
-                    bool sucesfull = false;
-                    for (int i = 0; i < persons.Count; i++)
-                    {
-                        string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
-                        {
-                            persons.RemoveAt(i);
-                            System.IO.File.WriteAllLines(path, persons);
-                            Console.WriteLine("Sucesfully remove person!");
-                            Console.WriteLine();
-                            sucesfull = true;
-                            break;
-                        }
-                        else if (sucesfull == false && i == persons.Count - 1)
-                        {
-                            Console.WriteLine("There are no person with this name!");
-                            Console.WriteLine();
-                        }
-                    }
-                }
-
-                else if (command == "f")
-                {
-                    Console.Write("Enter name:    ");
-                    string tempO = Console.ReadLine();
-                    bool sucesfull = false;
-                    for (int i = 0; i < persons.Count; i++)
-                    {
-                        string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
-                        {
-                            Console.WriteLine("BirthDay:      {0}", BirthDay(t[0]));
-                            Console.WriteLine("Days left:     {0}", Days(t[0]));
-                            Console.WriteLine("Age:           {0}", Age(t[0]));
-                            Console.WriteLine("Date of bitrh: {0}", DateTime.Parse(t[0]).ToString("dd-MM-yyyy"));
-                            Console.WriteLine();
-                            sucesfull = true;
-                            break;
-                        }
-                        else if (sucesfull == false && i == persons.Count - 1)
-                        {
-                            Console.WriteLine("There are no person with this name!");
-                            Console.WriteLine();
-                        }
-                    }
                 }
 
                 Console.Write("Enter command... ");
