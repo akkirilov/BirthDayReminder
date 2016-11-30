@@ -43,7 +43,7 @@ namespace BirthDayReminderApp
                 (DateTime.Today.Date - birthDate.AddYears(DateTime.Today.Year - birthDate.Year).Date).ToString("dd");
             return days;
         }
-
+        
         public static string BirthDay(string DateOfBirth)
         {
             DateTime birthDate = DateTime.Parse(DateOfBirth);
@@ -172,13 +172,13 @@ namespace BirthDayReminderApp
 
                 else if (command == "d")
                 {
-                    Console.Write("Enter name: ");
-                    string tempO = Console.ReadLine();
+                    Console.Write("Enter full name: ");
+                    string tempO = Console.ReadLine().ToLower();
                     bool sucesfull = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
                         string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
+                        if (t[1].ToLower() == tempO)
                         {
                             persons.RemoveAt(i);
                             System.IO.File.WriteAllLines(path, persons);
@@ -197,15 +197,15 @@ namespace BirthDayReminderApp
 
                 else if (command == "c")
                 {
-                    Console.Write("Enter old name: ");
-                    string tempO = Console.ReadLine();
+                    Console.Write("Enter old full name: ");
+                    string tempO = Console.ReadLine().ToLower();
                     Console.Write("Enter new name: ");
                     string tempN = Console.ReadLine();
                     bool sucesfull = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
                         string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
+                        if (t[1].ToLower() == tempO)
                         {
                             persons.RemoveAt(i);
                             persons.Insert(i, t[0] + "*" + tempN);
@@ -225,8 +225,8 @@ namespace BirthDayReminderApp
 
                 else if (command == "b")
                 {
-                    Console.Write("Enter name: ");
-                    string nameForChange = Console.ReadLine();
+                    Console.Write("Enter full name: ");
+                    string nameForChange = Console.ReadLine().ToLower();
                     Console.Write("Enter new date: ");
                     DateTime newDate;
                     if (DateTime.TryParse(Console.ReadLine(), out newDate))
@@ -235,7 +235,7 @@ namespace BirthDayReminderApp
                         for (int i = 0; i < persons.Count; i++)
                         {
                             string[] t = persons[i].Split('*');
-                            if (t[1] == nameForChange)
+                            if (t[1].ToLower() == nameForChange)
                             {
                                 if (DateTime.Parse(t[0]) == newDate)
                                 {
@@ -269,21 +269,24 @@ namespace BirthDayReminderApp
 
                 else if (command == "f")
                 {
-                    Console.Write("Enter name:    ");
-                    string tempO = Console.ReadLine();
+                    Console.Write("Enter full name:    ");
+                    string tempO = Console.ReadLine().ToLower();
+                    Console.WriteLine();
                     bool sucesfull = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
                         string[] t = persons[i].Split('*');
-                        if (t[1] == tempO)
+                        string[] tt = t[1].Split(' ');
+                        if ( t[1].ToLower() == tempO || 
+                            (tt.Length == 1 ? tt[0].ToLower() == tempO : tt[0].ToLower() == tempO || tt[1].ToLower() == tempO))
                         {
+                            Console.WriteLine("Name:          {0}", t[1]);
                             Console.WriteLine("BirthDay:      {0}", BirthDay(t[0]));
                             Console.WriteLine("Days left:     {0}", Days(t[0]));
                             Console.WriteLine("Age:           {0}", Age(t[0]));
                             Console.WriteLine("Date of bitrh: {0}", DateTime.Parse(t[0]).ToString("dd-MM-yyyy"));
                             Console.WriteLine();
                             sucesfull = true;
-                            break;
                         }
                         else if (sucesfull == false && i == persons.Count - 1)
                         {
@@ -435,6 +438,12 @@ namespace BirthDayReminderApp
                     {
                         Console.WriteLine("There are no person born at this year in your list!");
                     }
+                    Console.WriteLine();
+                }
+
+                else
+                {
+                    Console.WriteLine("Invalid command!");
                     Console.WriteLine();
                 }
 
