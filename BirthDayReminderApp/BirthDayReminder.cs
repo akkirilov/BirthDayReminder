@@ -273,12 +273,19 @@ namespace BirthDayReminderApp
                     string tempO = Console.ReadLine().ToLower();
                     Console.WriteLine();
                     bool sucesfull = false;
+                    bool onlyOne = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
                         string[] t = persons[i].Split('*');
-                        string[] tt = t[1].Split(' ');
-                        if ( t[1].ToLower() == tempO || 
-                            (tt.Length == 1 ? tt[0].ToLower() == tempO : tt[0].ToLower() == tempO || tt[1].ToLower() == tempO))
+                        if (t[1].ToLower() == tempO)
+                        {
+                            onlyOne = true;
+                        }
+                    }
+                    for (int i = 0; i < persons.Count; i++)
+                    {
+                        string[] t = persons[i].Split('*');
+                        if (onlyOne == true ? t[1].ToLower() == tempO : t[1].ToLower().Contains(tempO))
                         {
                             Console.WriteLine("Name:          {0}", t[1]);
                             Console.WriteLine("BirthDay:      {0}", BirthDay(t[0]));
