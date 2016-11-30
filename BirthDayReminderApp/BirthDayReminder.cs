@@ -269,10 +269,10 @@ namespace BirthDayReminderApp
 
                 else if (command == "f")
                 {
-                    Console.Write("Enter full name:    ");
+                    Console.Write("Enter name:    ");
                     string tempO = Console.ReadLine().ToLower();
                     Console.WriteLine();
-                    bool sucesfull = false;
+
                     bool onlyOne = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
@@ -282,6 +282,8 @@ namespace BirthDayReminderApp
                             onlyOne = true;
                         }
                     }
+
+                    bool sucesfull = false;
                     for (int i = 0; i < persons.Count; i++)
                     {
                         string[] t = persons[i].Split('*');

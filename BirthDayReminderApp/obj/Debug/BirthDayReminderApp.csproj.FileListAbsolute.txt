@@ -3,3 +3,4 @@ c:\users\basel\documents\visual studio 2015\Projects\BirthDayReminder\BirthDayRe
 c:\users\basel\documents\visual studio 2015\Projects\BirthDayReminder\BirthDayReminderApp\bin\Debug\BirthDayReminderApp.pdb
 c:\users\basel\documents\visual studio 2015\Projects\BirthDayReminder\BirthDayReminderApp\obj\Debug\BirthDayReminderApp.exe
 c:\users\basel\documents\visual studio 2015\Projects\BirthDayReminder\BirthDayReminderApp\obj\Debug\BirthDayReminderApp.pdb
+C:\Users\Basel\documents\visual studio 2015\Projects\BirthDayReminder\BirthDayReminderApp\obj\Debug\BirthDayReminderApp.csprojResolveAssemblyReference.cache
